@@ -10,13 +10,15 @@ def asdf_version(request):
     return request.param
 
 
-@pytest.fixture(scope="module")
-def env_path(asdf_version):
-    #path = tmp_path_factory.mktemp(f"asdf-{asdf_version}-env", numbered=False)
-    path = ".tmp"
+# @pytest.fixture(scope="module")
+# def env_path(asdf_version):
+#     path = ".tmp"
+#     virtualenv.cli_run([str(path)])
+#     #return path
+
+
+#def test_run_subprocess(asdf_version, env_path):
+def test_run_subprocess(asdf_version):
+    path = f".tmp_{asdf_version}"
     virtualenv.cli_run([str(path)])
-    #return path
-
-
-def test_run_subprocess(asdf_version, env_path):
     print("do nothing")
