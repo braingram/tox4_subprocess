@@ -1,10 +1,30 @@
+from contextlib import contextmanager
 import subprocess
 
 import pytest
 import pytest_remotedata
 import virtualenv
 
-PATCH_VERSIONS = ["1", "2"]
+
+@contextmanager
+def internet_temporarily_enabled(verbose=False):
+    """
+    Context manager that temporarily enables pytest_remotedata
+    internet.
+    """
+    initially_disabled = pytest_remotedata.disable_internet.INTERNET_OFF
+
+    pytest_remotedata.disable_internet.turn_on_internet(verbose=verbose)
+    try:
+        yield
+    finally:
+        if initially_disabled:
+            pytest_remotedata.disable_internet.turn_off_internet(verbose=verbose)
+
+
+with internet_temporarily_enabled():
+    PATCH_VERSIONS = ["1", "2"]
+
 
 @pytest.fixture(scope="module", params=PATCH_VERSIONS)
 def asdf_version(request):
