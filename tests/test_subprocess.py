@@ -42,5 +42,5 @@ def env_path(asdf_version, tmp_path_factory):
     return path
 
 
-def test_run_subprocess(asdf_version):
+def test_run_subprocess(asdf_version, env_path):
     print("do nothing")
