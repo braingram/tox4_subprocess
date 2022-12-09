@@ -4,11 +4,42 @@ import pytest
 import pytest_remotedata
 import virtualenv
 
+PATCH_VERSIONS = ["1", "2"]
 
-@pytest.mark.parametrize("msg", ["1", "2"])
-def test_run_subprocess(msg, tmp_path_factory):
-    path = tmp_path_factory.mktemp(f"foo_{msg}", numbered=False)
+@pytest.fixture(scope="module", params=PATCH_VERSIONS)
+def asdf_version(request):
+    """
+    The (old) version of the asdf library under test.
+    """
+    return request.param
+
+
+def env_run(env_path, command, *args, **kwargs):
+    """
+    Run a command on the context of the virtual environment at
+    the specified path.
+    """
+    print(f"env_run({env_path}, {command}, {args}, {kwargs})")
+    kwargs["bufsize"] = 0
+    return subprocess.run([env_path / "bin" / command] + list(args), **kwargs).returncode == 0
+
+
+@pytest.fixture(scope="module")
+def env_path(asdf_version, tmp_path_factory):
+    """
+    Path to the virtualenv where the (old) asdf library is installed.
+    """
+    path = tmp_path_factory.mktemp(f"asdf-{asdf_version}-env", numbered=False)
+    print(f"env_path {asdf_version} {path}")
 
     virtualenv.cli_run([str(path)])
 
-    assert subprocess.run([path / "bin" / "python", "--version"]).returncode == 0
+    env_run(path, "python3", "--version")
+    # env_run(path, "pip", "install", "requests")
+    # assert env_run(path, "pip", "install", f"asdf=={asdf_version}"), f"Failed to install asdf version {asdf_version}"
+    return path
+
+
+@pytest.mark.remote_data
+def test_run_subprocess(asdf_version, env_path, tmpdir):
+    print("do nothing")
