@@ -2,7 +2,7 @@ import os
 import subprocess
 
 import pytest
-import virtualenv
+#import virtualenv
 
 
 PATCH_VERSIONS = ["1", "2"]
@@ -16,14 +16,14 @@ def asdf_version(request):
     return request.param
 
 
-def env_run(env_path, command, *args, **kwargs):
-    """
-    Run a command on the context of the virtual environment at
-    the specified path.
-    """
-    print(f"env_run({env_path}, {command}, {args}, {kwargs})")
-    kwargs["bufsize"] = 0
-    #return subprocess.run([env_path / "bin" / command] + list(args), **kwargs).returncode == 0
+# def env_run(env_path, command, *args, **kwargs):
+#     """
+#     Run a command on the context of the virtual environment at
+#     the specified path.
+#     """
+#     print(f"env_run({env_path}, {command}, {args}, {kwargs})")
+#     kwargs["bufsize"] = 0
+#     #return subprocess.run([env_path / "bin" / command] + list(args), **kwargs).returncode == 0
 
 
 @pytest.fixture(scope="module")
@@ -34,9 +34,9 @@ def env_path(asdf_version, tmp_path_factory):
     path = tmp_path_factory.mktemp(f"asdf-{asdf_version}-env", numbered=False)
     print(f"env_path {asdf_version} {path}")
 
-    virtualenv.cli_run([str(path)])
+    #virtualenv.cli_run([str(path)])
 
-    env_run(path, "python3", "--version")
+    #env_run(path, "python3", "--version")
     # env_run(path, "pip", "install", "requests")
     # assert env_run(path, "pip", "install", f"asdf=={asdf_version}"), f"Failed to install asdf version {asdf_version}"
     return path
