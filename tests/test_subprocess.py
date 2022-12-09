@@ -11,4 +11,4 @@ def test_run_subprocess(msg, tmp_path_factory):
 
     virtualenv.cli_run([str(path)])
 
-    assert subprocess.run(["echo", str(path)]).returncode == 0
+    assert subprocess.run([path / "bin" / "python", "--version"]).returncode == 0
