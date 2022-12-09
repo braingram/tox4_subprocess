@@ -1,5 +1,4 @@
 [tool.pytest.ini_options]
-remote_data_strict = true
 filterwarnings = [
     'error',
 ]
