@@ -2,7 +2,7 @@ import os
 import subprocess
 
 import pytest
-#import virtualenv
+import virtualenv
 
 
 PATCH_VERSIONS = ["1", "2"]
@@ -34,7 +34,7 @@ def env_path(asdf_version, tmp_path_factory):
     path = tmp_path_factory.mktemp(f"asdf-{asdf_version}-env", numbered=False)
     print(f"env_path {asdf_version} {path}")
 
-    #virtualenv.cli_run([str(path)])
+    virtualenv.cli_run([str(path)])
 
     #env_run(path, "python3", "--version")
     # env_run(path, "pip", "install", "requests")
