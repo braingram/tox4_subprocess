@@ -1,28 +1,9 @@
-#from contextlib import contextmanager
 import subprocess
 
 import pytest
 import virtualenv
 
 
-#@contextmanager
-#def internet_temporarily_enabled(verbose=False):
-#    """
-#    Context manager that temporarily enables pytest_remotedata
-#    internet.
-#    """
-#    initially_disabled = pytest_remotedata.disable_internet.INTERNET_OFF
-#
-#    pytest_remotedata.disable_internet.turn_on_internet(verbose=verbose)
-#    try:
-#        yield
-#    finally:
-#        if initially_disabled:
-#            pytest_remotedata.disable_internet.turn_off_internet(verbose=verbose)
-
-
-#with internet_temporarily_enabled():
-#    PATCH_VERSIONS = ["1", "2"]
 PATCH_VERSIONS = ["1", "2"]
 
 
@@ -41,7 +22,7 @@ def env_run(env_path, command, *args, **kwargs):
     """
     print(f"env_run({env_path}, {command}, {args}, {kwargs})")
     kwargs["bufsize"] = 0
-    return subprocess.run([env_path / "bin" / command] + list(args), **kwargs).returncode == 0
+    #return subprocess.run([env_path / "bin" / command] + list(args), **kwargs).returncode == 0
 
 
 @pytest.fixture(scope="module")
