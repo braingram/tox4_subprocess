@@ -9,5 +9,6 @@ jobs:
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
     with:
       submodules: false
+      default_python: '3.9'
       envs: |
         - linux: compatibility
